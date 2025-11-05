@@ -6,6 +6,7 @@ export default function Toolbar({
   onAlignHorizontal,
   onAlignVertical,
   onExport,
+  onExportZPL,
   onImport,
   hasSelection,
 }) {
@@ -123,6 +124,12 @@ export default function Toolbar({
               className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
             >
               Export JSON
+            </button>
+            <button
+              onClick={onExportZPL}
+              className="w-full px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
+            >
+              Export ZPL
             </button>
             <button
               onClick={() => fileInputRef.current?.click()}

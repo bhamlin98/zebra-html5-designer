@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Toolbar from './components/Toolbar'
 import Canvas from './components/Canvas'
 import PropertiesPanel from './components/PropertiesPanel'
+import { generateZPL } from './utils/zplGenerator'
 
 function App() {
   const [canvasWidth, setCanvasWidth] = useState(4) // inches
@@ -142,6 +143,18 @@ function App() {
     reader.readAsText(file)
   }
 
+  const exportZPL = () => {
+    const zpl = generateZPL(elements, canvasWidth, canvasHeight, dpi)
+    const blob = new Blob([zpl], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'zebra-label.zpl'
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+
   const selectedElement = elements.find(el => el.id === selectedId)
 
   return (
@@ -161,6 +174,7 @@ function App() {
           onAlignHorizontal={alignHorizontal}
           onAlignVertical={alignVertical}
           onExport={exportJSON}
+          onExportZPL={exportZPL}
           onImport={importJSON}
           hasSelection={selectedId !== null}
         />
